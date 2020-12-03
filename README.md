@@ -39,7 +39,7 @@ See the accompanying [LuK-courses image](./Courses/LuK-courses.png) for graphica
 
 Course data is put into a Vertex as the member data. Nodes (vertexes) contain a course object and edges are the recommended or required predecessor relationships between courses.   
 
-If you are not able to build and run the example, see [sample output](Courses/example-output.txt) file included. Compare the output and the image file to the knowledge you have on graph algorithms to see how they work. See the code and try to understand how the code produces the behaviour that we want from them.
+If you are not able to build and run the example, see [sample output](./Courses/example-output.txt) file included. Compare the output and the image file to the knowledge you have on graph algorithms to see how they work. See the code and try to understand how the code produces the behaviour that we want from them.
 
 The weight of the edges have no meaning in this case, so the weights for all the edges are set to 1.0.
 
@@ -57,7 +57,7 @@ Saying this, there can be circular tracks with stations, so some instances of th
 
 The edges also have weights in this case. The weight is the distance of the stations in kilometres.
 
-This example also has an [accompanying image](TrainTravelling/TrainMap.png) showing the structure of the graph visually. The directory also includes a [sample output](TrainTravelling/example-output.txt) you can compare to the picture and to the algorithms.
+This example also has an [accompanying image](./TrainTravelling/TrainMap.png) showing the structure of the graph visually. The directory also includes a [sample output](./TrainTravelling/example-output.txt) you can compare to the picture and to the algorithms.
 
 ## Building the apps
 
