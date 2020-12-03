@@ -1,0 +1,105 @@
+ >>>> Welcome to study @ TOL! >>>>
+ *** Compare the results to the LuK-courses.png with this project! *** 
+
+Adjacency list for the network with weights:
+TIHA (030005)  ---> [ JOTU (811393A) 1, LUKT (811383A) 1 ]
+OROP (810020Y)  ---> [  ]
+JOTI (810136P)  ---> [ TITU (811168P) 1, OHLP (811174P) 1, JOHT (811103P) 1, LUKT (811383A) 1 ]
+LATI (811102P)  ---> [ TITU (811168P) 1 ]
+JOHT (811103P)  ---> [ VAMA (811391A) 1 ]
+OHJ1 (811104P)  ---> [ OHJ2 (811322A) 1 ]
+TJPE (811166P)  ---> [ TMSK (812360A) 1 ]
+TITU (811168P)  ---> [  ]
+OHLP (811174P)  ---> [  ]
+OHMS (811301A)  ---> [ OLAT (811306A) 1 ]
+OLAT (811306A)  ---> [ TIMS (811319A) 1 ]
+TIRA (811312A)  ---> [ OHJ3 (811367A) 1 ]
+TIMS (811319A)  ---> [ OHAR (815345A) 1 ]
+OHJ2 (811322A)  ---> [ TIKA (811325A) 1, OHMS (811301A) 1 ]
+TIKA (811325A)  ---> [ TIRA (811312A) 1, TIMS (811319A) 1 ]
+OHJ3 (811367A)  ---> [ OHJ4 (811368A) 1 ]
+OHJ4 (811368A)  ---> [ KAPO (811398A) 1 ]
+LUKT (811383A)  ---> [  ]
+VAMA (811391A)  ---> [ OHMS (811301A) 1 ]
+JOTU (811393A)  ---> [ LUKT (811383A) 1 ]
+PROT (811397A)  ---> [ KAPO (811398A) 1 ]
+KAPO (811398A)  ---> [  ]
+TMSK (812360A)  ---> [ IHSU (812363A) 1 ]
+TJHK (812361A)  ---> [ LPMJ (812362A) 1 ]
+LPMJ (812362A)  ---> [ DATA (812364A) 1, KAPO (811398A) 1 ]
+IHSU (812363A)  ---> [ TJHK (812361A) 1 ]
+DATA (812364A)  ---> [  ]
+OHAR (815345A)  ---> [ KAPO (811398A) 1 ]
+SUUR (900105Y)  ---> [ JOTU (811393A) 1 ]
+
+Is network disconnected: true
+
+Number of paths from JOTI to LUKT: 1
+Number of paths from JOTI to KAPO: 3
+
+Breadth first search from JOTI  1 810136P Johdatus tietojenkäsittelytieteisiin 1-1
+  2 811168P Tietoturva 1-3
+  3 811174P Ohjelmistoliiketoiminnan perusteet 1-3
+  4 811103P Johdatus ohjelmistotuotantoon 1-2
+  5 811383A LuK-tutkielma 3-3
+  6 811391A Vaatimusmäärittely 1-4
+  7 811301A Ohjelmistojen mallinnus ja suunnittelu 2-1
+  8 811306A Ohjelmistojen laatu ja testaus 2-2
+  9 811319A Tietomallinnus ja -suunnittelu 2-3
+ 10 815345A Ohjelmistoarkkitehtuurit 2-4
+ 11 811398A Kandidaattiprojekti 3-3
+
+ --- Depth search examples ---Depth first search from JOTI
+  1 810136P Johdatus tietojenkäsittelytieteisiin 1-1
+  2 811168P Tietoturva 1-3
+  3 811174P Ohjelmistoliiketoiminnan perusteet 1-3
+  4 811103P Johdatus ohjelmistotuotantoon 1-2
+  5 811391A Vaatimusmäärittely 1-4
+  6 811301A Ohjelmistojen mallinnus ja suunnittelu 2-1
+  7 811306A Ohjelmistojen laatu ja testaus 2-2
+  8 811319A Tietomallinnus ja -suunnittelu 2-3
+  9 815345A Ohjelmistoarkkitehtuurit 2-4
+ 10 811398A Kandidaattiprojekti 3-3
+ 11 811383A LuK-tutkielma 3-3
+
+Depth first search from OHJ1
+  1 811104P Ohjelmointi 1 1-1
+  2 811322A Ohjelmointi 2 1-3
+  3 811325A Tietokannat 1-1
+  4 811312A Tietorakenteet ja algoritmit 2-2
+  5 811367A Ohjelmointi 3 2-3
+  6 811368A Ohjelmointi 4  2-4
+  7 811398A Kandidaattiprojekti 3-3
+  8 811319A Tietomallinnus ja -suunnittelu 2-3
+  9 815345A Ohjelmistoarkkitehtuurit 2-4
+ 10 811301A Ohjelmistojen mallinnus ja suunnittelu 2-1
+ 11 811306A Ohjelmistojen laatu ja testaus 2-2
+
+
+Does the network have cycles?: no
+
+ --- Using Dijkstra's algorithm to find shortest path from JOTI to KAPO:
+
+    Johdatus tietojenkäsittelytieteisiin  --> Johdatus ohjelmistotuotantoon           
+           Johdatus ohjelmistotuotantoon  --> Vaatimusmäärittely                      
+                      Vaatimusmäärittely  --> Ohjelmistojen mallinnus ja suunnittelu  
+  Ohjelmistojen mallinnus ja suunnittelu  --> Ohjelmistojen laatu ja testaus          
+          Ohjelmistojen laatu ja testaus  --> Tietomallinnus ja -suunnittelu          
+          Tietomallinnus ja -suunnittelu  --> Ohjelmistoarkkitehtuurit                
+                Ohjelmistoarkkitehtuurit  --> Kandidaattiprojekti                     
+                           >> Totalling     7 steps
+
+ --- Using Dijkstra's algorithm to find shortest path from OHJ1 to KAPO:
+
+                           Ohjelmointi 1  --> Ohjelmointi 2                           
+                           Ohjelmointi 2  --> Tietokannat                             
+                             Tietokannat  --> Tietomallinnus ja -suunnittelu          
+          Tietomallinnus ja -suunnittelu  --> Ohjelmistoarkkitehtuurit                
+                Ohjelmistoarkkitehtuurit  --> Kandidaattiprojekti                     
+                           >> Totalling     5 steps
+
+
+<<<< Thank you for studying @ TOL! <<<<
+
+Program ended with exit code: 0
+
