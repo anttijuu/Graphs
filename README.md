@@ -35,7 +35,7 @@ Instructions on how to build the apps can be found at the end of this readme.
 
 ## Courses
 
-See the accompanying [LuK-courses image](Courses/LuK-courses.png) for graphical depiction of the relationships and compare the output of the program to this chart. The course map was originally generated using [GraphViz](https://github.com/anttijuu/tol-courses-graph).
+See the accompanying [LuK-courses image](./Courses/LuK-courses.png) for graphical depiction of the relationships and compare the output of the program to this chart. The course map was originally generated using [GraphViz](https://github.com/anttijuu/tol-courses-graph).
 
 Course data is put into a Vertex as the member data. Nodes (vertexes) contain a course object and edges are the recommended or required predecessor relationships between courses.   
 
