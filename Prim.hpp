@@ -71,7 +71,7 @@ std::pair<double,Graph<T>> Prim<T>::produceMinimumSpanningTreeFor(const Graph<T>
       return std::make_pair(cost, minimumSpanningTree);
    }
    Vertex<T> start = graph.adjacencies.begin()->first;
-
+   visited.insert(start);
    addAvailableEdges(start, graph, visited, priorityQueue);
    while (!priorityQueue.empty()) {
       const auto smallestEdge = priorityQueue.top();
