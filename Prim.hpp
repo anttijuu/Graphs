@@ -25,8 +25,6 @@ public:
                           std::priority_queue<Edge<T>, std::vector<Edge<T>>, weight_compare<T>> & toQueue);
 
    std::pair<double,Graph<T>> produceMinimumSpanningTreeFor(const Graph<T> & graph);
-
-   Graph<T> graph;
 };
 
 
