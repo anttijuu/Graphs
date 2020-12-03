@@ -174,3 +174,99 @@ Vainikkala   ---> [ Lahti  153, Joensuu  289 ]
 
 <<<< Thank you for travelling in Finland! <<<<
 
+
+ >>>> Welcome to Finnish railroad network! >>>>
+
+Adjacency list for the network with weights:
+Helsinki   ---> [ Tampere  187, Turku  193, Lahti  104 ]
+Joensuu   ---> [ Kuopio  169, Jyväskylä  262, Lahti  378, Vainikkala  289, Kotka  369 ]
+Jyväskylä   ---> [ Oulu  389, Kuopio  164, Tampere  154, Joensuu  262, Kotka  318, Lahti  325, Vainikkala  355 ]
+Kotka   ---> [ Kuopio  322, Jyväskylä  318, Joensuu  369, Lahti  115, Vainikkala  145 ]
+Kuopio   ---> [ Oulu  359, Joensuu  169, Jyväskylä  164, Lahti  330, Kotka  322, Vainikkala  360 ]
+Lahti   ---> [ Kuopio  330, Jyväskylä  325, Joensuu  378, Tampere  175, Turku  265, Vainikkala  153, Helsinki  104, Kotka  115 ]
+Oulu   ---> [ Kuopio  359, Jyväskylä  389, Tampere  495 ]
+Tampere   ---> [ Oulu  495, Jyväskylä  154, Turku  170, Helsinki  187, Lahti  175 ]
+Turku   ---> [ Tampere  170, Helsinki  193, Lahti  265 ]
+Vainikkala   ---> [ Kuopio  360, Jyväskylä  355, Joensuu  289, Lahti  153, Kotka  145 ]
+
+Is network disconnected: false
+Add Pori..
+Is netword disconnected: true
+
+Connecting Pori with Tampere...
+Is netword disconnected: false
+
+Adjacency list for the network with weights:
+Helsinki   ---> [ Tampere  187, Turku  193, Lahti  104 ]
+Joensuu   ---> [ Kuopio  169, Jyväskylä  262, Lahti  378, Vainikkala  289, Kotka  369 ]
+Jyväskylä   ---> [ Oulu  389, Kuopio  164, Tampere  154, Joensuu  262, Kotka  318, Lahti  325, Vainikkala  355 ]
+Kotka   ---> [ Kuopio  322, Jyväskylä  318, Joensuu  369, Lahti  115, Vainikkala  145 ]
+Kuopio   ---> [ Oulu  359, Joensuu  169, Jyväskylä  164, Lahti  330, Kotka  322, Vainikkala  360 ]
+Lahti   ---> [ Kuopio  330, Jyväskylä  325, Joensuu  378, Tampere  175, Turku  265, Vainikkala  153, Helsinki  104, Kotka  115 ]
+Oulu   ---> [ Kuopio  359, Jyväskylä  389, Tampere  495 ]
+Pori   ---> [ Tampere  132 ]
+Tampere   ---> [ Oulu  495, Jyväskylä  154, Turku  170, Helsinki  187, Lahti  175, Pori  132 ]
+Turku   ---> [ Tampere  170, Helsinki  193, Lahti  265 ]
+Vainikkala   ---> [ Kuopio  360, Jyväskylä  355, Joensuu  289, Lahti  153, Kotka  145 ]
+
+Distance from Helsinki to Lahti: 104 km
+
+Breadth first search from Oulu :
+  1 Oulu 555-1111 7-22
+  2 Kuopio 555-2222 6-23
+  3 Jyväskylä 555-3333 7-22
+  4 Tampere 555-5555 5-24
+  5 Joensuu 555-4444 9-19
+  6 Lahti 555-7777 8-16
+  7 Kotka 555-8888 8-22
+  8 Vainikkala 555-9999 4-24
+  9 Turku 555-6666 9-16
+ 10 Helsinki 555-1010 0-24
+ 11 Pori 555-1212 10-15
+
+Depth first search from Oulu :
+  1 Oulu 555-1111 7-22
+  2 Kuopio 555-2222 6-23
+  3 Joensuu 555-4444 9-19
+  4 Jyväskylä 555-3333 7-22
+  5 Tampere 555-5555 5-24
+  6 Turku 555-6666 9-16
+  7 Helsinki 555-1010 0-24
+  8 Lahti 555-7777 8-16
+  9 Vainikkala 555-9999 4-24
+ 10 Kotka 555-8888 8-22
+ 11 Pori 555-1212 10-15
+
+Does the network have cycles?: yes
+
+ --- Using Dijkstra's algorithm to find shortest path from Oulu to Vainikkala:
+
+        Oulu   -->  359 -->      Kuopio  
+      Kuopio   -->  360 -->  Vainikkala  
+    >> Totalling   719 km
+
+ --- Using Dijkstra's algorithm to find shortest path from Oulu to Turku:
+
+        Oulu   -->  495 -->     Tampere  
+     Tampere   -->  170 -->       Turku  
+    >> Totalling   665 km
+
+ --- Using the Prim algorithm to find the minimum spanning tree of the train network.
+Minimum trip in smallest network to travel is 2512 km.
+The minimum spanning tree is:
+Adjacency list for the network with weights:
+Helsinki   ---> [ Tampere  187, Turku  193 ]
+Joensuu   ---> [ Vainikkala  289 ]
+Jyväskylä   ---> [ Tampere  154 ]
+Kotka   ---> [ Lahti  115 ]
+Kuopio   ---> [ Oulu  359 ]
+Lahti   ---> [ Turku  265, Kotka  115, Vainikkala  153 ]
+Oulu   ---> [ Tampere  495, Kuopio  359 ]
+Pori   ---> [ Tampere  132 ]
+Tampere   ---> [ Helsinki  187, Oulu  495, Jyväskylä  154, Pori  132, Turku  170 ]
+Turku   ---> [ Tampere  170, Helsinki  193, Lahti  265 ]
+Vainikkala   ---> [ Lahti  153, Joensuu  289 ]
+
+
+<<<< Thank you for travelling in Finland! <<<<
+
