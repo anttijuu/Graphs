@@ -2,10 +2,10 @@
 
 This example demonstration implements a Graph data structure with C++.
 
-The example's root directory contains the generic graph data structures using C++ templates.
+The example's root directory contains the implementation of generic graph data structure using C++ templates.
 
 * `Vertex.hpp` implements the graph's vertex (the node). 
-* `Edge.hpp` implements the edges from vertexes to others.
+* `Edge.hpp` implements the edge from vertex to another.
 * `Graph.hpp` implements the actual graph of vertexes, edges and related algorithms.
 * `Dijkstra.hpp` implements the Dijktstra's path finding algorithms.
 
@@ -35,11 +35,11 @@ Instructions on how to build the apps can be found at the end of this readme.
 
 ## Courses
 
-See the accompanying [LuK-courses image](LuK-courses.png) for graphical depiction of the relationships and compare the output of the program to this chart. The course map was originally generated using [DOT and GraphViz](https://github.com/anttijuu/tol-courses-graph).
+See the accompanying [LuK-courses image](Courses/LuK-courses.png) for graphical depiction of the relationships and compare the output of the program to this chart. The course map was originally generated using [GraphViz](https://github.com/anttijuu/tol-courses-graph).
 
-Course data is put into a Vertex as the data of it. Nodes (vertexes) contain a course object and edges are the recommended or required predecessor relationships between courses.   
+Course data is put into a Vertex as the member data. Nodes (vertexes) contain a course object and edges are the recommended or required predecessor relationships between courses.   
 
-If you are not able to build and run the example, see `example-output.txt` file included. Compare the output and the image file to the knowledge you have on graph algorithms to see how they work. See the code and try to understand how the code produces the behaviour that we want from them.
+If you are not able to build and run the example, see [sample output](Courses/example-output.txt) file included. Compare the output and the image file to the knowledge you have on graph algorithms to see how they work. See the code and try to understand how the code produces the behaviour that we want from them.
 
 The weight of the edges have no meaning in this case, so the weights for all the edges are set to 1.0.
 
@@ -57,7 +57,7 @@ Saying this, there can be circular tracks with stations, so some instances of th
 
 The edges also have weights in this case. The weight is the distance of the stations in kilometres.
 
-This example also has an [accompanying image](TrainMap.png) showing the structure of the graph visually. The directory also includes a [sample output](example-output.txt) you can compare to the picture and to the algorithms.
+This example also has an [accompanying image](TrainTravelling/TrainMap.png) showing the structure of the graph visually. The directory also includes a [sample output](TrainTravelling/example-output.txt) you can compare to the picture and to the algorithms.
 
 ## Building the apps
 
@@ -65,7 +65,7 @@ You need a C++ compiler to build the apps, supporting C++ v 17. Most modern comp
 
 Both examples have CMakeLists.txt for building the apps  using [cmake](https://www.cmake.org)). Installing and using it easy,  as you can see from the instructions below.
 
-Instructions are for command line building. Many IDEs like MS Visual Studio and VS Code can import the CMake file from the tool, so if you use one of these, you can also do that.
+Instructions are for command line building. Many IDEs like MS Visual Studio and VS Code can import the CMake file from the tool, so if you use one of these, you can easily import the CMake file as a project in Visual Studio/Code.
 
 ### Using CMake and make
 
