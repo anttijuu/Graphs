@@ -212,11 +212,11 @@ std::vector<Vertex<T>> Graph<T>::depthFirstSearchFrom(const Vertex<T> & from) co
          }
          if (continueOuter) {                                     // *) Found vertexes to go deeper
             continue;                                             // into, so take them from stack
-         }                                                        // and search there instead of pop **
+         }                                                        // and search there instead of pop **)
       }
-      stack.pop();                                                // Did get deeper to one path
-   }                                                              // Now can pop vertex and take one...
-   return visited;                                                // ...from higher up the search tree.
+      stack.pop();                                                // **) Did get deeper to one path, so
+   }                                                              // now can pop vertex and take one
+   return visited;                                                // from higher up the search tree.
 }
 
 /**
