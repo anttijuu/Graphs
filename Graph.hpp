@@ -304,6 +304,7 @@ bool Graph<T>::hasCycle(const Vertex<T> & source) const {
 
 /*
  Are there any cycles in the graph?
+ This algorithm does a recursive depth first search to find cycles in the graph.
 */
 template <typename T>
 bool Graph<T>::hasCycle(const Vertex<T> & source, std::set<Vertex<T>> & pushed) const {
