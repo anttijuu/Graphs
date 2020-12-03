@@ -12,6 +12,7 @@
 #include "Graph.hpp"
 #include "Dijkstra.hpp"
 #include "Station.hpp"
+#include "Prim.hpp"
 
 void createNetwork(Graph<Station> & network);
 
@@ -91,6 +92,12 @@ int main(int argc, const char * argv[]) {
 
    });
    std::cout << std::setw(17) << ">> Totalling " << std::setw(5) << total << " km" << std::endl << std::endl;
+
+   std::cout << " --- Using the Prim algorithm to find the minimum spanning tree of the train network." << std::endl << std::endl;
+   std::pair<double,Graph<Station>> result = Prim<Station>().produceMinimumSpanningTreeFor(network);
+   std::cout << "Minimum trip in smallest network to travel is " << result.first << " km." << std::endl;
+   std::cout << "The minimum spanning tree is:" << std::endl;
+   std::cout << result.second << std::endl;
 
    std::cout << std::endl << "<<<< Thank you for travelling in Finland! <<<<" << std::endl << std::endl;
    return EXIT_SUCCESS;

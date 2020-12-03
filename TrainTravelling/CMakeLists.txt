@@ -28,7 +28,7 @@ endif(WIN32)
 
 message("Generated with config types: ${CMAKE_CONFIGURATION_TYPES}")
 
-add_executable(${APP_NAME} ../Graph.hpp ../Edge.hpp ../Vertex.hpp ../Dijkstra.hpp Station.hpp main.cpp)
+add_executable(${APP_NAME} ../Graph.hpp ../Edge.hpp ../Vertex.hpp ../Dijkstra.hpp ../Prim.hpp Station.hpp main.cpp)
 set_target_properties(${APP_NAME} PROPERTIES CXX_STANDARD 17)
 target_include_directories(${APP_NAME} PUBLIC "..")
 
