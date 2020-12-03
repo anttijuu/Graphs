@@ -60,7 +60,7 @@ The edges also have weights in this case. The weight is the distance of the stat
 
 This example also has an [accompanying image](./TrainTravelling/TrainMap.png) showing the structure of the graph visually. The directory also includes a [sample output](./TrainTravelling/example-output.txt) you can compare to the picture and to the algorithms.
 
-In the example run, *Prim algorithm* calculates the minimum spanning tree of the train network. You can see the minimun network that could enable travelling to all the stations in the [image drawn](./TrainTravelling/Prim-Minimum-Spanning-Tree.png) based on the output of the Prim algorithm.
+In the example run, *Prim algorithm* calculates the minimum spanning tree of the train network. You can see the minimun network that could enable travelling to all the stations in the [image drawn](./TrainTravelling/Prim-Minimum-Spanning-Tree.png) based on the output of the Prim algorithm. Egdes in red are the minimum spanning tree, thin dotted gray lines are part of the original railway network.
 
 ## Building the apps
 
