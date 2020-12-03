@@ -23,11 +23,6 @@ enum EdgeType {
    EUndirected       // Edge is two ways, from A to B and then back from B to A
 };
 
-template <typename T>
-struct DepthSearchResult {
-   /// Result contains a visited vertex with enty and exit counter.
-   std::vector<Vertex<T>, std::pair<int,int>> data;
-};
 
 /// Graph implemented as an edge type adjacency list.
 /// Each Vertex (node) has edge(s) to adjacent other Vertexes.
