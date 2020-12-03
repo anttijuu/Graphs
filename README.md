@@ -67,6 +67,8 @@ Both examples have CMakeLists.txt for building the apps using [cmake](https://ww
 
 Instructions are for command line building. Many IDEs like MS Visual Studio and VS Code can import the CMake file from the tool, so if you use one of these, you can easily import the CMake file as a project in Visual Studio/Code.
 
+If you are working with a Mac and Xcode, in step 4 below do `cmake -GXcode ..` and ignore step 5. You then have the Xcode project to open in the directory.
+
 ### Using CMake and make
 
 1. Go to the subdirectory having the `CMakeLists.txt` file
@@ -94,5 +96,5 @@ After this, you should have the binary to run in the ninja directory.
 MIT license.
 
 (c) Antti Juustila, 2020. All rights reserved.
-firstname.lastname <at> oulu dot fi, INTERACT Research Group
-University of Oulu, Finland
+firstname.lastname <at> oulu dot fi, INTERACT Research Group.
+University of Oulu, Finland.
