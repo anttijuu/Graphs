@@ -63,7 +63,7 @@ This example also has an [accompanying image](./TrainTravelling/TrainMap.png) sh
 
 You need a C++ compiler to build the apps, supporting C++ v 17. Most modern compilers should then do.
 
-Both examples have CMakeLists.txt for building the apps  using [cmake](https://www.cmake.org)). Installing and using it easy,  as you can see from the instructions below.
+Both examples have CMakeLists.txt for building the apps using [cmake](https://www.cmake.org). Installing and using it easy,  as you can see from the instructions below.
 
 Instructions are for command line building. Many IDEs like MS Visual Studio and VS Code can import the CMake file from the tool, so if you use one of these, you can easily import the CMake file as a project in Visual Studio/Code.
 
