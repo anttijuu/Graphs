@@ -43,7 +43,7 @@ int main(int argc, const char * argv[]) {
    std::cout << "Is network disconnected: " << (network.isDisconnected() ? "true" : "false") << std::endl << std::endl;
 
    std::cout << "Number of paths from JOTI to LUKT: " << network.numberOfPathsFrom(joti, lukt) << std::endl;
-   std::cout << "Number of paths from JOTI to KAPO: " << network.numberOfPathsFrom(ohj1, kapo) << std::endl << std::endl;
+   std::cout << "Number of paths from OHJ1 to KAPO: " << network.numberOfPathsFrom(ohj1, kapo) << std::endl << std::endl;
 
    std::cout << "Breadth first search from JOTI";
    auto vertices = network.breadthFirstSearchFrom(joti);

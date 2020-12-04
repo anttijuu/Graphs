@@ -43,11 +43,11 @@ std::vector<Edge<T>> Dijkstra<T>::route(const Vertex<T> & toDestination, const s
    if (paths.size() == 0) {
       return path;
    }
-   Visit visit = paths.at(vertex); //  paths[vertex];
+   Visit visit = paths.at(vertex);
    while (visit.type != VisitType::EStart) {
       path.push_back(visit.edge);
       vertex = visit.edge.source;
-      visit = paths.at(vertex); // [vertex];
+      visit = paths.at(vertex); 
    }
    return path;
 }

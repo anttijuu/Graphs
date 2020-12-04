@@ -6,12 +6,6 @@
 
 #include "Graph.hpp"
 
-template <typename T>
-struct weight_compare {
-   bool operator () (const Edge<T> & lhs, const Edge<T> & rhs) {
-      return lhs.weight > rhs.weight;
-   };
-};
 
 
 template <typename T>
