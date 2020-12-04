@@ -105,7 +105,7 @@ int main(int argc, const char * argv[]) {
 
 void createNetwork(Graph<Course> & network) {
    // See the TrainMap.png of this network.
-   auto tiha = network.createVertex(Course("030005", "TIHA", L"Tiedonhankintakurssi", 3, 1));
+   auto tiha = network.createVertex(Course("030005P", "TIHA", L"Tiedonhankintakurssi", 3, 1));
    auto suur = network.createVertex(Course("900105Y", "SUUR", L"Suuntaa uralle viestinnän keinoin", 3, 2));
    auto orop = network.createVertex(Course("810020Y", "OROP", L"Orientoivat opinnot", 1, 1));
    auto joti = network.createVertex(Course("810136P", "JOTI", L"Johdatus tietojenkäsittelytieteisiin", 1, 1));

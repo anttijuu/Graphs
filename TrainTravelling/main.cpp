@@ -70,7 +70,7 @@ int main(int argc, const char * argv[]) {
       << vertice.data.phone << " " << vertice.data.opens << "-" << vertice.data.closes <<  std::endl;
    }
 
-   std::cout << std::endl << "Does the network have cycles?: " << (network.hasCycle(pori) ? "yes" : "no") << std::endl << std::endl;
+   std::cout << std::endl << "Does the network have cycles?: " << (network.hasCycle(vainikkala) ? "yes" : "no") << std::endl << std::endl;
 
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from Oulu to Vainikkala:" << std::endl << std::endl;
    Dijkstra<Station> dijkstra(network);
