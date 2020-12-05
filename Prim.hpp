@@ -7,10 +7,10 @@
 #include "Graph.hpp"
 
 /**
- Prim algorithm finds us the minimum spanning three for a graph.
+ Prim algorithm finds the minimum spanning three for an undirected graph.
  See the output of the algorithm in the examples, and compare the
- output to the image files drawn based on the output to see what thee
- algorithm actually does, especially in the TrainTravelling example.
+ output to the image files drawn based on the output to see what the
+ algorithm actually does in the TrainTravelling example.
  */
 
 template <typename T>
@@ -25,6 +25,7 @@ public:
                           std::priority_queue<Edge<T>, std::vector<Edge<T>>, weight_compare<T>> & toQueue);
 
    // The work of Prim algorithm is done in this function, for a graph given as parameter.
+   // Function returns a pair containing the 1) total cost of the weights in 2) the minumum spanning tree.
    std::pair<double,Graph<T>> produceMinimumSpanningTreeFor(const Graph<T> & graph);
 };
 
@@ -101,7 +102,7 @@ std::pair<double,Graph<T>> Prim<T>::produceMinimumSpanningTreeFor(const Graph<T>
       cost += smallestEdge.weight;
       // And add tthe edge's source and destination with the weight to the minimum spanning tree...
       minimumSpanningTree.add(EdgeType::EUndirected, smallestEdge.source, smallestEdge.destination, smallestEdge.weight);
-      // ...and add the available edges from the starting vertex to the priority queue from the graph
+      // ...and add the available edges from this vertex to the priority queue from the graph
       // if it has not been visited before.
       addAvailableEdges(vertex, graph, visited, priorityQueue);
    }
