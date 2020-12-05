@@ -76,6 +76,7 @@ int main(int argc, const char * argv[]) {
    Dijkstra<Station> dijkstra(network);
    auto pathsFromOulu = dijkstra.shortestPathFrom(oulu);
    auto path = dijkstra.shortestPathTo(vainikkala, pathsFromOulu);
+   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
    double total = 0.0;
    std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
       std::cout << std::setw(12) << edge.source << " --> " << std::setw(4) << edge.weight << " -->" << std::setw(12) << edge.destination << std::endl;
@@ -85,6 +86,7 @@ int main(int argc, const char * argv[]) {
 
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from Oulu to Turku:" << std::endl << std::endl;
    path = dijkstra.shortestPathTo(turku, pathsFromOulu);
+   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
    total = 0.0;
    std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
       std::cout << std::setw(12) << edge.source << " --> " << std::setw(4) << edge.weight << " -->" << std::setw(12) << edge.destination << std::endl;

@@ -79,6 +79,7 @@ int main(int argc, const char * argv[]) {
    Dijkstra<Course> dijkstra(network);
    auto pathsFromJOTI = dijkstra.shortestPathFrom(joti);
    auto path = dijkstra.shortestPathTo(kapo, pathsFromJOTI);
+   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
    double total = 0.0;
    std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
       std::wcout << std::right << std::setw(40) << edge.source.data.name << std::setw(6) << " --> ";
@@ -90,6 +91,7 @@ int main(int argc, const char * argv[]) {
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from OHJ1 to KAPO:" << std::endl << std::endl;
    auto pathsFromOHJ1 = dijkstra.shortestPathFrom(ohj1);
    path = dijkstra.shortestPathTo(kapo, pathsFromOHJ1);
+   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
    total = 0.0;
    std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
       std::wcout << std::right << std::setw(40) << edge.source.data.name << std::setw(6) << " --> ";
