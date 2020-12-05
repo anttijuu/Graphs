@@ -14,7 +14,11 @@
 #include "Station.hpp"
 #include "Prim.hpp"
 
+// Helper funcs
 void createNetwork(Graph<Station> & network);
+void printVertices(const std::vector<Vertex<Station>> & vertices);
+void printPath(const std::vector<Edge<Station>> & path);
+
 
 int main(int argc, const char * argv[]) {
 
@@ -55,20 +59,11 @@ int main(int argc, const char * argv[]) {
 
    std::cout << "Breadth first search from " << oulu << ":" << std::endl;
    auto vertices = network.breadthFirstSearchFrom(oulu);
-   int counter = 1;
-   for (const auto & vertice : vertices) {
-      std::cout << std::setw(3) << counter++ << " " << vertice.data.name << " "
-         << vertice.data.phone << " " << vertice.data.opens << "-" << vertice.data.closes <<  std::endl;
-   }
-   std::cout << std::endl;
+   printVertices(vertices);
 
    std::cout << "Depth first search from " << oulu << ":" << std::endl;
    auto vertices2 = network.depthFirstSearchFrom(oulu);
-   counter = 1;
-   for (const auto & vertice : vertices2) {
-      std::cout << std::setw(3) << counter++ << " " << vertice.data.name << " "
-      << vertice.data.phone << " " << vertice.data.opens << "-" << vertice.data.closes <<  std::endl;
-   }
+   printVertices(vertices2);
 
    std::cout << std::endl << "Does the network have cycles?: " << (network.hasCycle(vainikkala) ? "yes" : "no") << std::endl << std::endl;
 
@@ -76,24 +71,11 @@ int main(int argc, const char * argv[]) {
    Dijkstra<Station> dijkstra(network);
    auto pathsFromOulu = dijkstra.shortestPathFrom(oulu);
    auto path = dijkstra.shortestPathTo(vainikkala, pathsFromOulu);
-   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
-   double total = 0.0;
-   std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
-      std::cout << std::setw(12) << edge.source << " --> " << std::setw(4) << edge.weight << " -->" << std::setw(12) << edge.destination << std::endl;
-      total += edge.weight;
-   });
-   std::cout << std::setw(17) << ">> Totalling " << std::setw(6) << total << " km" << std::endl << std::endl;
+   printPath(path);
 
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from Oulu to Turku:" << std::endl << std::endl;
    path = dijkstra.shortestPathTo(turku, pathsFromOulu);
-   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
-   total = 0.0;
-   std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
-      std::cout << std::setw(12) << edge.source << " --> " << std::setw(4) << edge.weight << " -->" << std::setw(12) << edge.destination << std::endl;
-      total += edge.weight;
-
-   });
-   std::cout << std::setw(17) << ">> Totalling " << std::setw(6) << total << " km" << std::endl << std::endl;
+   printPath(path);
 
    std::cout << " --- Using the Prim algorithm to find the minimum spanning tree of the train network." << std::endl << std::endl;
    std::pair<double,Graph<Station>> result = Prim<Station>().produceMinimumSpanningTreeFor(network);
@@ -151,4 +133,24 @@ void createNetwork(Graph<Station> & network) {
    network.add(EdgeType::EUndirected, lahti, kotka, 115);
 
    network.add(EdgeType::EUndirected, kotka, vainikkala, 145);
+}
+
+void printVertices(const std::vector<Vertex<Station>> & vertices) {
+   int counter = 1;
+   for (const auto & vertice : vertices) {
+      std::cout << std::setw(3) << counter++ << " " << vertice.data.name << " "
+      << vertice.data.phone << " " << vertice.data.opens << "-" << vertice.data.closes <<  std::endl;
+   }
+   std::cout << std::endl;
+}
+
+void printPath(const std::vector<Edge<Station>> & path) {
+   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
+   double total = 0.0;
+   std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
+      std::cout << std::setw(12) << edge.source << " --> " << std::setw(4) << edge.weight << " -->" << std::setw(12) << edge.destination << std::endl;
+      total += edge.weight;
+
+   });
+   std::cout << std::setw(17) << ">> Totalling " << std::setw(6) << total << " km" << std::endl << std::endl;
 }
