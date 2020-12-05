@@ -12,7 +12,7 @@ enum VisitType {
    EEdge
 };
 
-// A visit has a type and when visiting between vertexes (after the starting node)
+// A visit has a type and when visiting between vertices (after the starting node)
 // also an edge.
 template <typename T>
 struct Visit {

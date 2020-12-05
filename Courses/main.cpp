@@ -14,7 +14,10 @@
 #include "Dijkstra.hpp"
 #include "Course.hpp"
 
+// Helper funcs
 void createNetwork(Graph<Course> & network);
+void printVertices(const std::vector<Vertex<Course>> & vertices);
+void printPath(const std::vector<Edge<Course>> & path);
 
 int main(int argc, const char * argv[]) {
 
@@ -34,7 +37,7 @@ int main(int argc, const char * argv[]) {
    Course kapo("811398A");
    Course ohj1("811104P");
 
-   /// Fill the network with vertexes and edges.
+   /// Fill the network with vertices and edges.
    createNetwork(network);
 
    /// Print out the network adjacency list.
@@ -47,58 +50,45 @@ int main(int argc, const char * argv[]) {
 
    std::cout << "Breadth first search from JOTI";
    auto vertices = network.breadthFirstSearchFrom(joti);
-   int counter = 1;
-   for (const auto & vertice : vertices) {
-      std::cout << std::setw(3) << counter++ << " " << vertice.data.code << " ";
-      std::wcout << vertice.data.name << " " << vertice.data.year << "-" << vertice.data.period <<  std::endl;
-   }
-   std::cout << std::endl;
+   printVertices(vertices);
 
    std::cout << " --- Depth search examples ---";
    std::cout << "Depth first search from JOTI" << std::endl;
    vertices = network.depthFirstSearchFrom(joti);
-   counter = 1;
-   for (const auto & vertice : vertices) {
-      std::cout << std::setw(3) << counter++ << " " << vertice.data.code << " ";
-      std::wcout << vertice.data.name << " " << vertice.data.year << "-" << vertice.data.period <<  std::endl;
-   }
-   std::cout << std::endl;
+   printVertices(vertices);
+
    std::cout << "Depth first search from OHJ1" << std::endl;
    vertices = network.depthFirstSearchFrom(ohj1);
-   counter = 1;
-   for (const auto & vertice : vertices) {
-      std::cout << std::setw(3) << counter++ << " " << vertice.data.code << " ";
-      std::wcout << vertice.data.name << " " << vertice.data.year << "-" << vertice.data.period <<  std::endl;
-   }
-   std::cout << std::endl;
-
+   printVertices(vertices);
 
    std::cout << std::endl << "Does the network have cycles?: " << (network.hasCycle(joti) ? "yes" : "no") << std::endl << std::endl;
+
+   // Take all vertices and do depth search for each of them, unless it already is included
+   // in some search result.
+   std::cout << ">>> All trees in the network: >>>" << std::endl << std::endl;
+   vertices = network.allVertices();
+   std::vector<Vertex<Course>> visited;
+   for (const Vertex<Course> & vertex : vertices) {
+      if (std::find(visited.begin(), visited.end(), vertex) == visited.end()) {
+         auto depthSearchVertices = network.depthFirstSearchFrom(vertex);
+         printVertices(depthSearchVertices);
+         for (auto vertex : depthSearchVertices) {
+            visited.push_back(vertex);
+         }
+      }
+   }
+   std::cout << "<<< End of all trees in the network: <<<" << std::endl << std::endl;
 
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from JOTI to KAPO:" << std::endl << std::endl;
    Dijkstra<Course> dijkstra(network);
    auto pathsFromJOTI = dijkstra.shortestPathFrom(joti);
    auto path = dijkstra.shortestPathTo(kapo, pathsFromJOTI);
-   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
-   double total = 0.0;
-   std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
-      std::wcout << std::right << std::setw(40) << edge.source.data.name << std::setw(6) << " --> ";
-      std::wcout << std::left << std::setw(40) << edge.destination.data.name << std::endl;
-      total += edge.weight;
-   });
-   std::cout << std::setw(40) << ">> Totalling " << std::setw(5) << total << " steps" << std::endl << std::endl;
+   printPath(path);
 
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from OHJ1 to KAPO:" << std::endl << std::endl;
    auto pathsFromOHJ1 = dijkstra.shortestPathFrom(ohj1);
    path = dijkstra.shortestPathTo(kapo, pathsFromOHJ1);
-   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
-   total = 0.0;
-   std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
-      std::wcout << std::right << std::setw(40) << edge.source.data.name << std::setw(6) << " --> ";
-      std::wcout << std::left << std::setw(40) << edge.destination.data.name << std::endl;
-      total += edge.weight;
-   });
-   std::cout << std::setw(40) << ">> Totalling " << std::setw(5) << total << " steps" << std::endl << std::endl;
+   printPath(path);
 
    std::cout << std::endl << "<<<< Thank you for studying @ TOL! <<<<" << std::endl << std::endl;
    return EXIT_SUCCESS;
@@ -181,4 +171,24 @@ void createNetwork(Graph<Course> & network) {
    network.add(EdgeType::EDirected, suur, jotu, 1);
    network.add(EdgeType::EDirected, tiha, lukt, 1);
    network.add(EdgeType::EDirected, jotu, lukt, 1);
+}
+
+void printVertices(const std::vector<Vertex<Course>> & vertices) {
+   int counter = 1;
+   for (const auto & vertice : vertices) {
+      std::cout << std::setw(3) << counter++ << " " << vertice.data.code << " ";
+      std::wcout << vertice.data.name << " " << vertice.data.year << "-" << vertice.data.period <<  std::endl;
+   }
+   std::cout << std::endl;
+}
+
+void printPath(const std::vector<Edge<Course>> & path) {
+   // Path has the elements in opposite order, so printing out them in reverse order using rbegin/rend.
+   double total = 0.0;
+   std::for_each(path.rbegin(), path.rend(), [&total](const auto & edge) {
+      std::wcout << std::right << std::setw(40) << edge.source.data.name << std::setw(6) << " --> ";
+      std::wcout << std::left << std::setw(40) << edge.destination.data.name << std::endl;
+      total += edge.weight;
+   });
+   std::cout << std::setw(40) << ">> Totalling " << std::setw(5) << total << " steps" << std::endl << std::endl;
 }

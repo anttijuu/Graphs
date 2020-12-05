@@ -25,7 +25,7 @@ enum EdgeType {
 
 
 /// Graph implemented as an edge type adjacency list.
-/// Each Vertex (node) has edge(s) to adjacent other Vertexes.
+/// Each Vertex (node) has edge(s) to adjacent other vertices.
 /// Edges can be directed (one direction only) or undirected (towards both directions).
 /// Each Edge has a weight attribute, a number that can be used to "weight" the edge.
 /// For example, it could be a distance (in km) or price or time to travel that edge.
@@ -176,15 +176,15 @@ std::ostream & operator << (std::ostream & stream, const Graph<T> & adjacencyLis
 
 template <typename T>
 std::vector<Vertex<T>> Graph<T>::breadthFirstSearchFrom(const Vertex<T> & from) const {
-   std::queue<Vertex<T>> queue;     // Vertexes to visit next
-   std::set<Vertex<T>> enqueued;    // Vertexes already found and marked to be visited
-   std::vector<Vertex<T>> visited;  // All visited vertexes
+   std::queue<Vertex<T>> queue;     // vertices to visit next
+   std::set<Vertex<T>> enqueued;    // vertices already found and marked to be visited
+   std::vector<Vertex<T>> visited;  // All visited vertices
 
    // Start from the provided vertex.
-   queue.push(from);          // Push to vertexes to visit
+   queue.push(from);          // Push to vertices to visit
    enqueued.insert(from);     // and mark that is either visited or marked to be visited.
 
-   while (!queue.empty()) {                        // Are there vertexes to visit?
+   while (!queue.empty()) {                        // Are there vertices to visit?
       auto vertex = queue.front();                 // Take the next one
       queue.pop();
       visited.push_back(adjacencies.find(vertex)->first);                   // Add it to the visited.
@@ -196,14 +196,14 @@ std::vector<Vertex<T>> Graph<T>::breadthFirstSearchFrom(const Vertex<T> & from) 
          }
       }
    }
-   return visited;      // Here we have all the vertexes in the order they were found, breadth first.
+   return visited;      // Here we have all the vertices in the order they were found, breadth first.
 }
 
 template <typename T>
 std::vector<Vertex<T>> Graph<T>::depthFirstSearchFrom(const Vertex<T> & from) const {
-   std::stack<Vertex<T>> stack;        // Vertexes to depth search.
+   std::stack<Vertex<T>> stack;        // vertices to depth search.
    std::set<Vertex<T>> pushed;         // Not yet handled in depth search
-   std::vector<Vertex<T>> visited;     // Vertexes visited in depth search
+   std::vector<Vertex<T>> visited;     // vertices visited in depth search
 
    stack.push(from);                   // Where to start from
    pushed.insert(from);                // This is now (being) handled
@@ -225,7 +225,7 @@ std::vector<Vertex<T>> Graph<T>::depthFirstSearchFrom(const Vertex<T> & from) co
                break;                                             // deeper to items in stack (see *)
             }
          }
-         if (continueOuter) {                                     // *) Found vertexes to go deeper
+         if (continueOuter) {                                     // *) Found vertices to go deeper
             continue;                                             // into, so take them from stack
          }                                                        // and search there instead of pop **)
       }
@@ -258,7 +258,7 @@ bool Graph<T>::isDisconnected() const {
       return false;
    }
 
-   // Do a breadh first search to get all vertexes.
+   // Do a breadh first search to get all vertices.
    const auto & visited = breadthFirstSearchFrom(vertices.at(0));
    // If you can find one vertice from all vertices that was not visited,
    // then the graph has disconnected areas.
@@ -327,7 +327,7 @@ bool Graph<T>::hasCycle(const Vertex<T> & source, std::set<Vertex<T>> & pushed) 
    auto neighbours = edges(source);    // Get the edges from the source
    // For each edge...
    for (const Edge<T> & edge : neighbours) {
-      // .. if the edge's destination is not in the set of handled vertexes
+      // .. if the edge's destination is not in the set of handled vertices
       // ... and hasCycle returns true for edge's destination (in that path we have cycles),
       // then we have cycles!
       if (std::find(pushed.begin(), pushed.end(), edge.destination) == pushed.end()
