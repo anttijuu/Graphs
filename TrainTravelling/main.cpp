@@ -82,7 +82,7 @@ int main(int argc, const char * argv[]) {
       std::cout << std::setw(12) << edge.source << " --> " << std::setw(4) << edge.weight << " -->" << std::setw(12) << edge.destination << std::endl;
       total += edge.weight;
    });
-   std::cout << std::setw(17) << ">> Totalling " << std::setw(5) << total << " km" << std::endl << std::endl;
+   std::cout << std::setw(17) << ">> Totalling " << std::setw(6) << total << " km" << std::endl << std::endl;
 
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from Oulu to Turku:" << std::endl << std::endl;
    path = dijkstra.shortestPathTo(turku, pathsFromOulu);
@@ -93,7 +93,7 @@ int main(int argc, const char * argv[]) {
       total += edge.weight;
 
    });
-   std::cout << std::setw(17) << ">> Totalling " << std::setw(5) << total << " km" << std::endl << std::endl;
+   std::cout << std::setw(17) << ">> Totalling " << std::setw(6) << total << " km" << std::endl << std::endl;
 
    std::cout << " --- Using the Prim algorithm to find the minimum spanning tree of the train network." << std::endl << std::endl;
    std::pair<double,Graph<Station>> result = Prim<Station>().produceMinimumSpanningTreeFor(network);
