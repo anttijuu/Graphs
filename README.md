@@ -1,6 +1,8 @@
 # Graphs Example
 
-This example demonstration implements a Graph data structure with C++.
+This demonstration implements a Graph data structure with C++ and demonstrates the usage of graphs with two projects.
+
+**Note** that this is *work in progress* so there are changes and additions coming and bugs fixed as we go. Check the latest commit dates. If commits are old, probably I'm done.
 
 The example's root directory contains the implementation of generic graph data structure using C++ templates.
 
@@ -10,7 +12,7 @@ The example's root directory contains the implementation of generic graph data s
 * `Dijkstra.hpp` implements the Dijktstra's path finding algorithms.
 * `Prim.hpp` implements the Prim algorithm to find the minimum spanning tree of a graph.
 
-Two subdirectories are examples, using this graph implementation to demonstrate how they could be used:
+Two subdirectories are example projects, using this graph implementation to demonstrate how they could be used:
 
 * **Courses** creates a graph from the BSc study program courses at the study program I am teaching. 
 * **TrainTravelling** creates a graph of major Finnish railroad stations and railroads between them, as well as the distances in between.
@@ -66,7 +68,7 @@ In the example run, *Prim algorithm* calculates the minimum spanning tree of the
 
 You need a C++ compiler to build the apps, supporting C++ v 17. Most modern compilers should then do.
 
-Both examples have CMakeLists.txt for building the apps using [cmake](https://www.cmake.org). Installing and using it easy,  as you can see from the instructions below.
+Both examples have `CMakeLists.txt` for building the apps using [cmake](https://www.cmake.org). Installing and using it to build apps is easy,  as you can see from the instructions below.
 
 Instructions are for command line building. Many IDEs like MS Visual Studio and VS Code can import the CMake file from the tool, so if you use one of these, you can easily import the CMake file as a project in Visual Studio/Code.
 
@@ -100,4 +102,5 @@ MIT license.
 
 (c) Antti Juustila, 2020. All rights reserved.
 firstname.lastname <at> oulu dot fi, INTERACT Research Group.
+Study Program for Information Processing Science.
 University of Oulu, Finland.
