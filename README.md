@@ -1,6 +1,6 @@
 # Graphs Example
 
-This demonstration implements a Graph data structure with C++ and demonstrates the usage of graphs with two projects.
+This demonstration implements a Graph data structure with C++ and demonstrates the usage of graphs with two example projects.
 
 **Note** that this is *work in progress* so there are changes and additions coming and bugs fixed as we go. Check the latest commit dates. If commits are old, probably I'm done. If you find any issues, please report them in the project GitHub issues or email me.
 
@@ -23,9 +23,11 @@ This UML class diagram shows the structure of the demonstration:
 
 Basically, a `Graph` has an associative table (`std::map`) of vertices and their edges (edge list). Edges know their source and destination Vertex. Dijkstra and Prim algorightms use the Graph to analyse it.
 
-Both examples use the graph implementation, utilizing the generic programming with templates. In the TrainTravelling example, template `typename T` is replaced with `Station` struct (shown in the class diagram). In the Courses example, template parameter T is the `Course` struct.
+Both examples use the graph implementation, utilizing the generic programming with templates. In the TrainTravelling example, template `typename T` is replaced with `Station` struct (shown in the class diagram). In the Courses example, template parameter T is the `Course` struct. 
 
-The implementation also utilizes the following C++ Standard Template Library collections in implementing the Graph algorithms:
+Note that since graph contains the struct instances both in the Vertex and also in the Edges, depending on the number of vertices and edges, the amout of used memory grows considerably. If the number of vertices and edges is large and data type contained is also large, it is better to use only the key values (int, string) of the data type in the graph itself, and have a separate (associative) table where to get the details of the data type using the key for output.
+
+The implementation utilizes the following C++ Standard Template Library collections in implementing the Graph algorithms:
 
 * `std::map` -- for implementing the associative containers with key - value pairs.
 * `std::pair` -- for handling pairs with `std::map` as well as returning values from functions. 
