@@ -124,7 +124,7 @@ std::map<Vertex<T>, Visit<T>> Dijkstra<T>::shortestPathFrom(const Vertex<T> & st
    // First insert the starting visiting edge to the path.
    paths.insert(std::pair<Vertex<T>,Visit<T>>(graph.adjacencies.find(start)->first, visit));
 
-   // Create a prioritty queue sorting the vertices in the order of path distances from the vertex.
+   // Create a priority queue sorting the vertices in the order of path distances from the vertex.
    std::priority_queue<Vertex<T>, std::vector<Vertex<T>>, distance_compare<T>> priorityQueue(distance_compare(*this, paths));
    // When we push vertices in the priority queue, they are then automatically arranged in the order of path distance (length).
    priorityQueue.push(graph.adjacencies.find(start)->first);

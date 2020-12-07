@@ -40,9 +40,9 @@ Prim<T>::Prim() {
  */
 template <typename T>
 void Prim<T>::addAvailableEdges(const Vertex<T> & vertex,
-                       const Graph<T> & graph,
-                       const std::set<Vertex<T>> & visited,
-                       std::priority_queue<Edge<T>, std::vector<Edge<T>>, weight_compare<T>> & toQueue) {
+                              const Graph<T> & graph,
+                              const std::set<Vertex<T>> & visited,
+                              std::priority_queue<Edge<T>, std::vector<Edge<T>>, weight_compare<T>> & toQueue) {
 
    for (const Edge<T> & edge : graph.edges(vertex)) {
       if (visited.find(edge.destination) == visited.end()) {
@@ -72,7 +72,7 @@ std::pair<double,Graph<T>> Prim<T>::produceMinimumSpanningTreeFor(const Graph<T>
    // is a _max_ priority queue but we here need a _min_ priority queue. So we ask the queue to
    // order the elements in greater-than order so when we call queue.top(), we get the _smallest_, not
    // largest elements out of the queue first.
-   std::priority_queue<Edge<T>, std::vector<Edge<T>>, weight_compare<T>> priorityQueue;  // TODO: check out the sorting of the queue
+   std::priority_queue<Edge<T>, std::vector<Edge<T>>, weight_compare<T>> priorityQueue;
 
    minimumSpanningTree.copyVertices(graph);     // Copy vertices from the original graph, no edges.
 
