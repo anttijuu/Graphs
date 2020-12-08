@@ -44,7 +44,7 @@ public:
    /// Add a directed edge from source to destination vertex.
    void addDirectedEdge(const Vertex<T> & source, const Vertex<T> & destination, double weight);
 
-   void copyVertices(const Graph<T> & graph);
+   void copyVerticesFrom(const Graph<T> & graph);
 
    /// Get all the edges from a vertex.
    const std::vector<Edge<T>> & edges(const Vertex<T> & fromSource) const;
@@ -120,7 +120,7 @@ void Graph<T>::addDirectedEdge(const Vertex<T> & source, const Vertex<T> & desti
  Copies vertices from the other graph.
  */
 template <typename T>
-void Graph<T>::copyVertices(const Graph<T> & graph) {
+void Graph<T>::copyVerticesFrom(const Graph<T> & graph) {
    for (const auto & vertexAndEdges : graph.adjacencies) {
       adjacencies[vertexAndEdges.first] = {};
    }

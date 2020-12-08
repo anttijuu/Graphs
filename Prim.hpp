@@ -74,7 +74,7 @@ std::pair<double,Graph<T>> Prim<T>::produceMinimumSpanningTreeFor(const Graph<T>
    // largest elements out of the queue first.
    std::priority_queue<Edge<T>, std::vector<Edge<T>>, weight_compare<T>> priorityQueue;
 
-   minimumSpanningTree.copyVertices(graph);     // Copy vertices from the original graph, no edges.
+   minimumSpanningTree.copyVerticesFrom(graph);     // Copy vertices from the original graph, no edges.
 
    // If the graph has nothing in, return cost of 0.0 and the empty minimum spanning tree.
    if (graph.adjacencies.empty()) {
