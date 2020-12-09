@@ -18,7 +18,7 @@
 void createNetwork(Graph<Station> & network);
 void printVertices(const std::vector<Vertex<Station>> & vertices);
 void printPath(const std::vector<Edge<Station>> & path);
-
+void printPaths(const std::map<Vertex<Station>, Visit<Station>> & paths);
 
 int main(int argc, const char * argv[]) {
 
@@ -67,9 +67,11 @@ int main(int argc, const char * argv[]) {
 
    std::cout << std::endl << "Does the network have cycles?: " << (network.hasCycle(vainikkala) ? "yes" : "no") << std::endl << std::endl;
 
-   std::cout << " --- Using Dijkstra's algorithm to find shortest path from Oulu to Vainikkala:" << std::endl << std::endl;
+   std::cout << " --- Using Dijkstra's algorithm to find shortest path from Oulu to Vainikkala" << std::endl << std::endl;
    Dijkstra<Station> dijkstra(network);
-   auto pathsFromOulu = dijkstra.shortestPathFrom(oulu);
+   std::cout << "First get all shortest paths from Oulu" << std::endl;
+   auto pathsFromOulu = dijkstra.shortestPathsFrom(oulu);
+   printPaths(pathsFromOulu);
    auto path = dijkstra.shortestPathTo(vainikkala, pathsFromOulu);
    printPath(path);
 
@@ -153,4 +155,52 @@ void printPath(const std::vector<Edge<Station>> & path) {
 
    });
    std::cout << std::setw(17) << ">> Totalling " << std::setw(6) << total << " km" << std::endl << std::endl;
+}
+
+// Helper function to show the visits done by Dijkstra in the first step
+// when finding the shortest paths from starting station.
+void printPaths(const std::map<Vertex<Station>, Visit<Station>> & paths) {
+   // Visits arranged by Station operator < so based on station name.
+   // We wish to print starting visit first, then other so let's do that.
+   // Using tempPath since it is easier to erase paths as we print them and
+   // concentrate on those paths not yet printed.
+   auto tempPath = paths;
+
+   // Printing out paths in some sensible order until all are handled and tempPath is empty.
+   Vertex<Station> station;
+   std::queue<Vertex<Station>> nextStations;
+   while (!tempPath.empty()) {
+      bool startFound = false;
+      auto iterator = tempPath.begin();
+      // First print the starting edge, and remove it from map when done.
+      while (!startFound && iterator != tempPath.end()) {
+         if (iterator->second.type == VisitType::EStart) {
+            station = iterator->first;
+            std::cout << "Starting from: " << station << std::endl;
+            tempPath.erase(iterator);
+            nextStations.push(station);
+            startFound = true;
+            break; // (iterator != paths.end())
+         }
+         iterator++;
+      }
+      // Then print edges in order and remove them when done. Only Edges here so no need to check visit type.
+      while (!nextStations.empty()) {
+         station = nextStations.front();
+         nextStations.pop();
+         iterator = tempPath.begin();
+         while (iterator != tempPath.end()) {
+            if (iterator->second.edge.source == station) {
+               std::cout << " Edge " << iterator->second.edge.source << "-> " << iterator->second.edge.destination;
+               std::cout << " " << iterator->second.edge.weight << " km." << std::endl;
+               nextStations.push(iterator->second.edge.destination);
+               tempPath.erase(iterator);
+               iterator = tempPath.begin();
+            } else {
+               iterator++;
+            }
+         }
+      }
+   }
+   std::cout << std::endl;
 }

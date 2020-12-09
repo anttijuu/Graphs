@@ -81,12 +81,12 @@ int main(int argc, const char * argv[]) {
 
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from JOTI to KAPO:" << std::endl << std::endl;
    Dijkstra<Course> dijkstra(network);
-   auto pathsFromJOTI = dijkstra.shortestPathFrom(joti);
+   auto pathsFromJOTI = dijkstra.shortestPathsFrom(joti);
    auto path = dijkstra.shortestPathTo(kapo, pathsFromJOTI);
    printPath(path);
 
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from OHJ1 to KAPO:" << std::endl << std::endl;
-   auto pathsFromOHJ1 = dijkstra.shortestPathFrom(ohj1);
+   auto pathsFromOHJ1 = dijkstra.shortestPathsFrom(ohj1);
    path = dijkstra.shortestPathTo(kapo, pathsFromOHJ1);
    printPath(path);
 

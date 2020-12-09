@@ -32,7 +32,7 @@ public:
    // Gives a distance to destination from given vertex and paths.
    double distance(const Vertex<T> & toDestination, const std::map<Vertex<T>, Visit<T>> & paths) const;
    // Gives a map of visiting paths from a starting vertex.
-   std::map<Vertex<T>, Visit<T>> shortestPathFrom(const Vertex<T> & start) const;
+   std::map<Vertex<T>, Visit<T>> shortestPathsFrom(const Vertex<T> & start) const;
    // Gives an array of edges as the shortest path to a destination using several paths as a starting point.
    std::vector<Edge<T>> shortestPathTo(const Vertex<T> & destination, const std::map<Vertex<T>, Visit<T>> & paths) const;
 
@@ -117,13 +117,15 @@ struct distance_compare {
  containing the Vertex and the paths as a Visit object (containing the Edges of the path).
  */
 template <typename T>
-std::map<Vertex<T>, Visit<T>> Dijkstra<T>::shortestPathFrom(const Vertex<T> & start) const {
+std::map<Vertex<T>, Visit<T>> Dijkstra<T>::shortestPathsFrom(const Vertex<T> & start) const {
    Visit<T> visit;
    visit.type = VisitType::EStart;
-   std::map<Vertex<T>, Visit<T>> paths;  // The result returned from this function.
+   std::map<Vertex<T>, Visit<T>> paths;  // The result returned from this function; shortest paths from start.
    // First insert the starting visiting edge to the path.
-   paths.insert(std::pair<Vertex<T>,Visit<T>>(graph.adjacencies.find(start)->first, visit));
-
+   paths.insert( { graph.adjacencies.find(start)->first, visit } );
+   //  ↑                            ↑                           ↑
+   // Key-value table         The key (Vertex)        The value (Visit)
+   
    // Create a priority queue sorting the vertices in the order of path distances from the vertex.
    std::priority_queue<Vertex<T>, std::vector<Vertex<T>>, distance_compare<T>> priorityQueue(distance_compare(*this, paths));
    // When we push vertices in the priority queue, they are then automatically arranged in the order of path distance (length).
