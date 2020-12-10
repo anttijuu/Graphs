@@ -37,14 +37,14 @@ public:
    std::vector<Edge<T>> shortestPathTo(const Vertex<T> & destination, const std::map<Vertex<T>, Visit<T>> & paths) const;
 
    // The graph to use to find the shortest path.
-   Graph<T> graph;
+   const Graph<T> & graph;
 };
 
 // Constructor copies the graph from the parameter to be used by Dijkstra algorithm.
 // Original graph is not touched.
 template <typename T>
-Dijkstra<T>::Dijkstra(const Graph<T> & graph) {
-   this->graph = graph;
+Dijkstra<T>::Dijkstra(const Graph<T> & graph)
+: graph(graph) {
 }
 
 // Finds a route to a destination using given paths.
