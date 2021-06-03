@@ -3,4 +3,5 @@
 .DS_Store
 ninja/
 xcode/
+test/
 

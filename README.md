@@ -2,7 +2,7 @@
 
 This demonstration implements a Graph data structure with C++ and demonstrates the usage of graphs with two example projects.
 
-**Note** that this is *work in progress* so there are changes and additions coming and bugs fixed as we go. Check the latest commit dates. If commits are old, probably I'm done. If you find any issues, please report them in the project GitHub issues or email me.
+If you find any issues, please report them in the project GitHub issues or email me.
 
 The example's root directory contains the implementation of generic graph data structure using C++ templates.
 
@@ -105,9 +105,9 @@ After this, you should have the binary to run in the ninja directory.
 
 MIT license.
 
-(c) Antti Juustila, 2020. All rights reserved.
+(c) Antti Juustila, 2020-2021. All rights reserved.
 
-firstname.lastname <at> oulu dot fi, [INTERACT Research Group](http://interact.oulu.fi).
+firstname.lastname *at* oulu dot fi, [INTERACT Research Group](http://interact.oulu.fi).
 
 [Study Program for Information Processing Science](https://www.oulu.fi/tol/).
 

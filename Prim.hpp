@@ -100,7 +100,7 @@ std::pair<double,Graph<T>> Prim<T>::produceMinimumSpanningTreeFor(const Graph<T>
       visited.insert(vertex);
       // Add the weight of the edge to total cost.
       cost += smallestEdge.weight;
-      // And add tthe edge's source and destination with the weight to the minimum spanning tree...
+      // And add the edge's source and destination with the weight to the minimum spanning tree...
       minimumSpanningTree.add(EdgeType::EUndirected, smallestEdge.source, smallestEdge.destination, smallestEdge.weight);
       // ...and add the available edges from this vertex to the priority queue from the graph
       // if it has not been visited before.
