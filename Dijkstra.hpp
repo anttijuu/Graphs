@@ -2,6 +2,7 @@
 #define Dijkstra_hpp
 
 #include <queue>
+#include <limits>
 
 #include "Graph.hpp"
 
@@ -31,8 +32,12 @@ public:
    std::vector<Edge<T>> route(const Vertex<T> & toDestination, const std::map<Vertex<T>, Visit<T>> & paths) const;
    // Gives a distance to destination from given vertex and paths.
    double distance(const Vertex<T> & toDestination, const std::map<Vertex<T>, Visit<T>> & paths) const;
+   // Gives a max weight on route to destination from given vertex and paths.
+   double maxWeight(const Vertex<T> & toDestination, const std::map<Vertex<T>, Visit<T>> & paths) const;
    // Gives a map of visiting paths from a starting vertex.
    std::map<Vertex<T>, Visit<T>> shortestPathsFrom(const Vertex<T> & start) const;
+   // Gives a map of visiting paths from a starting vertex.
+   std::map<Vertex<T>, Visit<T>> lowestPathsFrom(const Vertex<T> & start) const;
    // Gives an array of edges as the shortest path to a destination using several paths as a starting point.
    std::vector<Edge<T>> shortestPathTo(const Vertex<T> & destination, const std::map<Vertex<T>, Visit<T>> & paths) const;
 
@@ -76,6 +81,20 @@ double Dijkstra<T>::distance(const Vertex<T> & toDestination, const std::map<Ver
    return totalDistance;
 }
 
+// Finds the maximum weight via the destination using given paths.
+template <typename T>
+double Dijkstra<T>::maxWeight(const Vertex<T> & toDestination, const std::map<Vertex<T>, Visit<T>> & paths) const {
+   auto path = route(toDestination, paths);
+   double maxWeightInPath = 0.0;
+   std::for_each(path.begin(), path.end(), [&maxWeightInPath] (const Edge<T> & edge) {
+      if (edge.weight > maxWeightInPath) {
+         maxWeightInPath = edge.weight;
+      }
+   });
+   return maxWeightInPath;
+}
+
+
 /*
  A comparator function object.
  This is needed in shortestPathFrom function.
@@ -113,6 +132,23 @@ struct distance_compare {
 };
 
 /*
+ Like distance_compare, but this comparison looks for lowest weight on the path.
+ */
+template <typename T>
+struct path_weight_compare {
+   // A constructor we can use to give the Dijkstra and path objects to the comparator.
+   path_weight_compare(const Dijkstra<T> & d, const std::map<Vertex<T>, Visit<T>> & p)
+   : dijkstra(d), paths(p) { /* Empty implementation */ };
+   // The actual operator std::priority_queue uses to compare the elements in the queue.
+   bool operator () (const Vertex<T> & lhs, const Vertex<T> & rhs) {
+      return dijkstra.maxWeight(lhs, paths) > dijkstra.maxWeight(rhs, paths);
+   };
+   const Dijkstra<T> & dijkstra;                   // Comparator needs this to call distance()
+   const std::map<Vertex<T>, Visit<T>> & paths;    // Comparator needs this to calculate the distance.
+};
+
+
+/*
  Function finds the shortest paths from a starting vertex, and returns the paths in a map
  containing the Vertex and the paths as a Visit object (containing the Edges of the path).
  */
@@ -123,8 +159,8 @@ std::map<Vertex<T>, Visit<T>> Dijkstra<T>::shortestPathsFrom(const Vertex<T> & s
    std::map<Vertex<T>, Visit<T>> paths;  // The result returned from this function; shortest paths from start.
    // First insert the starting visiting edge to the path.
    paths.insert( { graph.adjacencies.find(start)->first, visit } );
-   //  ↑                            ↑                           ↑
-   // Key-value table         The key (Vertex)        The value (Visit)
+   //  ↑                                    ↑              ↑
+   // Key-value table              The key (Vertex)   The value (Visit)
    
    // Create a priority queue sorting the vertices in the order of path distances from the vertex.
    std::priority_queue<Vertex<T>, std::vector<Vertex<T>>, distance_compare<T>> priorityQueue(distance_compare(*this, paths));
@@ -144,6 +180,47 @@ std::map<Vertex<T>, Visit<T>> Dijkstra<T>::shortestPathsFrom(const Vertex<T> & s
          // and push the edge's destination to the priority queue.
          if (paths.find(edge.destination) == paths.end() ||
              distance(vertex, paths) + weight < distance(edge.destination, paths)) {
+            paths[edge.destination].type = VisitType::EEdge;
+            paths[edge.destination].edge = edge;
+            priorityQueue.push(edge.destination);
+         }
+      }
+   }
+   return paths;
+}
+
+/*
+ A variant of shortestPathsFrom. In this method, the goai is to get the path where the edges have
+ the max weight that has the lowest possible value.
+ */
+template <typename T>
+std::map<Vertex<T>, Visit<T>> Dijkstra<T>::lowestPathsFrom(const Vertex<T> & start) const {
+   Visit<T> visit;
+   visit.type = VisitType::EStart;
+   std::map<Vertex<T>, Visit<T>> paths;  // The result returned from this function; lowest paths from start.
+                                         // First insert the starting visiting edge to the path.
+   paths.insert( { graph.adjacencies.find(start)->first, visit } );
+   //  ↑                                    ↑              ↑
+   // Key-value table              The key (Vertex)   The value (Visit)
+
+   // Create a priority queue sorting the vertices in the order of lowest paths by weight from the vertex.
+   std::priority_queue<Vertex<T>, std::vector<Vertex<T>>, path_weight_compare<T>> priorityQueue(path_weight_compare(*this, paths));
+   // When we push vertices in the priority queue, they are then automatically arranged in the order of path weight.
+   priorityQueue.push(graph.adjacencies.find(start)->first);
+
+   // Start from the starting vertex already in the queue.
+   while (!priorityQueue.empty()) {                   // While there are vertices int he queue.
+      auto vertex = priorityQueue.top();              // Take the vertice having the lowest weight out.
+      priorityQueue.pop();
+      auto edges = graph.edges(vertex);               // Get the edges of this vertex
+      for (const auto & edge : edges) {               // For each edge...
+         double weight = edge.weight;
+         // If the edge's destination has not yet been added to paths _or_
+         // the weight of the path path + current edge's length is _smaller_ than the weight of the
+         // edge's destination's paths, then add the edge's destination to the paths as an edge type visit
+         // and push the edge's destination to the priority queue.
+         if (paths.find(edge.destination) == paths.end() ||
+             maxWeight(vertex, paths) + weight < maxWeight(edge.destination, paths)) {
             paths[edge.destination].type = VisitType::EEdge;
             paths[edge.destination].edge = edge;
             priorityQueue.push(edge.destination);
