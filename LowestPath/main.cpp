@@ -107,9 +107,8 @@ bool createNetwork(const std::string & filePath, Graph<int> & network) {
             }
             done = true;
          }
-
-         // process pair (a,b)
       }
+      file.close();
    } catch (std::exception & e) {
       std::cout << "Could not open file: " << e.what() << std::endl;
       return false;
