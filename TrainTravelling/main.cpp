@@ -85,6 +85,13 @@ int main(int argc, const char * argv[]) {
    std::cout << "The minimum spanning tree is:" << std::endl;
    std::cout << result.second << std::endl;
 
+   auto topoList = network.topologicalSort();
+   if (topoList.empty()) {
+      std::cout << "--- No topological sort result for Finnish train network since it has cycles." << std::endl;
+   } else {
+      std::cout << "--- Topological sort result for Finnish train network:" << std::endl;
+      printVertices(topoList);
+   }
    std::cout << std::endl << "<<<< Thank you for travelling in Finland! <<<<" << std::endl << std::endl;
    return EXIT_SUCCESS;
 }
