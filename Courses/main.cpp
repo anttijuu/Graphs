@@ -90,6 +90,14 @@ int main(int argc, const char * argv[]) {
    path = dijkstra.shortestPathTo(kapo, pathsFromOHJ1);
    printPath(path);
 
+
+   auto topologicalList = network.topologicalSort();
+   std::cout << std::endl << " --- Topological sort list of courses: " << std::endl;
+   if (topologicalList.empty()) {
+      std::cout << std::endl << "    Not able to sort, maybe graph is not directed & acyclic? " << std::endl;
+   }
+   printVertices(topologicalList);
+
    std::cout << std::endl << "<<<< Thank you for studying @ TOL! <<<<" << std::endl << std::endl;
    return EXIT_SUCCESS;
 }
@@ -171,6 +179,12 @@ void createNetwork(Graph<Course> & network) {
    network.add(EdgeType::EDirected, suur, jotu, 1);
    network.add(EdgeType::EDirected, tiha, lukt, 1);
    network.add(EdgeType::EDirected, jotu, lukt, 1);
+
+   // Testing with better dependencies; related to topological sort
+   network.add(EdgeType::EDirected, joti, tjps, 1);
+   network.add(EdgeType::EDirected, lati, ohj1, 1);
+   network.add(EdgeType::EDirected, titu, tika, 1);
+   network.add(EdgeType::EDirected, late, prot, 1);
 }
 
 void printVertices(const std::vector<Vertex<Course>> & vertices) {

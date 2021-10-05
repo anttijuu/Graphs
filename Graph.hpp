@@ -62,18 +62,30 @@ public:
 
    /// Gets the number of paths from a vertex to another.
    int numberOfPathsFrom(const Vertex<T> & source, const Vertex<T> & destination) const;
-   /// Helper function for numberOfPathsFrom().
-   void pathsFrom(const Vertex<T> & source, const Vertex<T> & destination, std::set<Vertex<T>> & visited, int & pathCount) const;
 
    /// Checks if the graph contains areas that are disconnected.
    bool isDisconnected() const;
    /// Checks if the graph contains cycles between the vertices.
    bool hasCycle(const Vertex<T> & source) const;
-   /// Helper function for hasCycle(Vertex<T>).
-   bool hasCycle(const Vertex<T> & source, std::set<Vertex<T>> & pushed) const;
+
+   /// Topological sort with DFS
+   std::vector<Vertex<T>> topologicalSort() const;
 
    /// Associative table; a dictionary where a Vertex has an array of edges.
    std::map<Vertex<T>, std::vector<Edge<T>>> adjacencies;
+
+private:
+   /// Helper function for numberOfPathsFrom().
+   void pathsFrom(const Vertex<T> & source, const Vertex<T> & destination, std::set<Vertex<T>> & visited, int & pathCount) const;
+
+   /// Helper function for topological sort.
+   bool hasCycle(const Vertex<T> & source, std::set<Vertex<T>> & pushed) const;
+
+   /// Helper function for topological sort, doing DFS
+   bool topologicalSortDFS(const Vertex<T> & from,
+                           std::set<Vertex<T>> & tmpMarked,
+                           std::set<Vertex<T>> & permMarked,
+                           std::vector<Vertex<T>> & topoList) const;
 };
 
 
@@ -340,6 +352,59 @@ bool Graph<T>::hasCycle(const Vertex<T> & source, std::set<Vertex<T>> & pushed) 
    }
    pushed.erase(source);
    return false;     // Otherwise, we do not have cycles.
+}
+
+template <typename T>
+std::vector<Vertex<T>> Graph<T>::topologicalSort() const {
+   // This list will contain the nodes in topological sort order
+   std::vector<Vertex<T>> topologicalList;
+   // Nodes handled
+   std::set<Vertex<T>> grayNodes;
+   std::set<Vertex<T>> blackNodes;
+
+   // Go through all the nodes in the graph
+   std::vector<Vertex<T>> allNodes = allVertices();
+   while (!allNodes.empty()) {
+      // While still nodes to handle, get one from the list
+      Vertex<T> node = allNodes.front();
+      allNodes.erase(allNodes.begin());
+      // Does the DFS topological sort if not already handled for this node.
+      if (blackNodes.find(node) == blackNodes.end()) {
+         if (!topologicalSortDFS(node, grayNodes, blackNodes, topologicalList)) {
+            topologicalList.clear();
+            break;
+         }
+      }
+   }
+   return topologicalList;
+}
+
+template <typename T>
+bool Graph<T>::topologicalSortDFS(const Vertex<T> & from,
+                                  std::set<Vertex<T>> & grayNodes,
+                                  std::set<Vertex<T>> & blackNodes,
+                                  std::vector<Vertex<T>> & topoList) const {
+   // Terminates when it hits any node that has already been visited since the beginning of
+   // the topological sort or the node has no outgoing edges (i.e. a leaf node).
+   if (blackNodes.find(from) != blackNodes.end()) {
+      return true;
+   }
+   // If node can be found from the "temporary" marked set, the graph
+   // has cycles so return true. This will stop the search.
+   if (grayNodes.find(from) != grayNodes.end()) {
+      return false; // Stop searching, cycle in graph
+   }
+   grayNodes.insert(from);
+   auto neighbours = edges(from);
+   for (const Edge<T> & edge : neighbours) {
+      if (!topologicalSortDFS(edge.destination, grayNodes, blackNodes, topoList)) {
+         return false;
+      }
+   }
+   grayNodes.erase(from);
+   blackNodes.insert(from);
+   topoList.insert(topoList.begin(),from);
+   return true;
 }
 
 #endif /* Graph_hpp */
