@@ -358,8 +358,9 @@ template <typename T>
 std::vector<Vertex<T>> Graph<T>::topologicalSort() const {
    // This list will contain the nodes in topological sort order
    std::vector<Vertex<T>> topologicalList;
-   // Nodes handled
+   // Nodes handling in process
    std::set<Vertex<T>> grayNodes;
+   // Processed nodes
    std::set<Vertex<T>> blackNodes;
 
    // Go through all the nodes in the graph
@@ -370,6 +371,7 @@ std::vector<Vertex<T>> Graph<T>::topologicalSort() const {
       allNodes.erase(allNodes.begin());
       // Does the DFS topological sort if not already handled for this node.
       if (blackNodes.find(node) == blackNodes.end()) {
+         // If returns false, could not do this because cycles.
          if (!topologicalSortDFS(node, grayNodes, blackNodes, topologicalList)) {
             topologicalList.clear();
             break;
@@ -390,19 +392,23 @@ bool Graph<T>::topologicalSortDFS(const Vertex<T> & from,
       return true;
    }
    // If node can be found from the "temporary" marked set, the graph
-   // has cycles so return true. This will stop the search.
+   // has cycles so return false. This will stop the search.
    if (grayNodes.find(from) != grayNodes.end()) {
       return false; // Stop searching, cycle in graph
    }
+   // Now the node is in processing.
    grayNodes.insert(from);
+   // Recursively handle outgoing edges from the node
    auto neighbours = edges(from);
    for (const Edge<T> & edge : neighbours) {
       if (!topologicalSortDFS(edge.destination, grayNodes, blackNodes, topoList)) {
          return false;
       }
    }
+   // Node processed so remove it from grays and add to blacks.
    grayNodes.erase(from);
    blackNodes.insert(from);
+   // And put the node in the beginning of the list.
    topoList.insert(topoList.begin(),from);
    return true;
 }
