@@ -168,7 +168,7 @@ std::map<Vertex<T>, Visit<T>> Dijkstra<T>::shortestPathsFrom(const Vertex<T> & s
    priorityQueue.push(graph.adjacencies.find(start)->first);
 
    // Start from the starting vertex already in the queue.
-   while (!priorityQueue.empty()) {                   // While there are vertices int he queue.
+   while (!priorityQueue.empty()) {                   // While there are vertices in the queue.
       auto vertex = priorityQueue.top();              // Take the vertice having the shortest distance out.
       priorityQueue.pop();
       auto edges = graph.edges(vertex);               // Get the edges of this vertex

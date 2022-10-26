@@ -157,11 +157,11 @@ void createNetwork(Graph<Course> & network) {
 
    // Programming module
    network.add(EdgeType::EDirected, ohj1, ohj2, 1);
-   network.add(EdgeType::EDirected, ohj2, tika, 1);
+   network.add(EdgeType::EDirected, ohj1, tika, 1);
    network.add(EdgeType::EDirected, ohj2, ohms, 1);
-   network.add(EdgeType::EDirected, tika, tira, 1);
+   network.add(EdgeType::EDirected, ohj2, tira, 1);
    network.add(EdgeType::EDirected, tika, tims, 1);
-   network.add(EdgeType::EDirected, tira, ohj3, 1);
+   network.add(EdgeType::EDirected, ohj2, ohj3, 1);
    network.add(EdgeType::EDirected, ohj3, ohj4, 1);
    network.add(EdgeType::EDirected, ohj4, kapo, 1);
 
