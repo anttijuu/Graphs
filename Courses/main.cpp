@@ -22,9 +22,10 @@ void printPath(const std::vector<Edge<Course>> & path);
 int main(int argc, const char * argv[]) {
 
    // Needed to get scandinavian chars aligned properly in printing shortest path.
-   std::setlocale(LC_ALL, "fi_FI.UTF-8");
-   std::locale loc("fi_FI.UTF-8");
-   std::wcout.imbue(loc);
+	// Uncomment these if your system supports locales properly
+//	std::setlocale(LC_ALL, "fi_FI.UTF-8");
+//	std::locale loc("fi_FI.UTF-8");
+//	std::wcout.imbue(loc);
 
    std::cout << std::endl << " >>>> Welcome to study @ TOL! >>>>" << std::endl;
    std::cout << " *** Compare the results to the LuK-courses.png with this project! *** " << std::endl << std::endl;

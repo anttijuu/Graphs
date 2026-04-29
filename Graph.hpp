@@ -14,6 +14,7 @@
 #include <queue>     // basic queue used in different algorithms
 #include <set>       // unordered collection, helper container used in some algos
 #include <stack>     // basic stack, used in many places when going through the graph.
+#include <algorithm> // algorithms such as std::find etc.
 
 #include "Vertex.hpp"   // a node for the graph
 #include "Edge.hpp"     // an edge of the graph, from node to another
