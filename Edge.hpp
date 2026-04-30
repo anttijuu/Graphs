@@ -63,7 +63,7 @@ int operator < (const Edge<T> & lhs, const Edge<T> & rhs) {
 
 template <typename T>
 std::ostream & operator << (std::ostream & stream, const Edge<T> & edge) {
-   stream << edge.destination.data << " " << edge.weight;
+   stream << edge.destination.data << " <" << edge.weight << ">";
    return stream;
 }
 

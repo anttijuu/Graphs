@@ -45,6 +45,9 @@ public:
    /// Add a directed edge from source to destination vertex.
    void addDirectedEdge(const Vertex<T> & source, const Vertex<T> & destination, double weight);
 
+	/// Checks if the vertex already has an edge with specified destination vertex.
+	bool hasDestination(const Vertex<T> & vertex, const Vertex<T> & destination) const;
+	
    void copyVerticesFrom(const Graph<T> & graph);
 
    /// Get all the edges from a vertex.
@@ -90,6 +93,17 @@ private:
 };
 
 
+/*
+ Adds a directed edge in the graph between source and destination.
+ */
+template <typename T>
+void Graph<T>::addDirectedEdge(const Vertex<T> & source, const Vertex<T> & destination, double weight) {
+	if (!hasDestination(source, destination)) {
+		Edge<T> edge = Edge<T>(source, destination, weight);
+		adjacencies.at(source).push_back(edge);
+	}
+}
+
 template <typename T>
 void Graph<T>::addUndirectedEdge(const Vertex<T> & source, const Vertex<T> & destination, double weight) {
    // Adding an undirectional edge, so add a directed edge to both directions.
@@ -109,6 +123,16 @@ void Graph<T>::add(EdgeType edge, const Vertex<T> & source, const Vertex<T> & de
    }
 }
 
+template <typename T>
+bool Graph<T>::hasDestination(const Vertex<T> & vertex, const Vertex<T> & destination) const {
+	for (const auto & edge : edges(vertex)) {
+		if (edge.destination == destination) {
+			return true;
+		}
+	}
+	return false;
+}
+
 /*
  Creates a vertex and puts it in the map with an empty vector of edges.
  Returns a copy of the vertex to the caller.
@@ -118,15 +142,6 @@ Vertex<T> Graph<T>::createVertex(const T & data) {
    Vertex<T> vertex = Vertex<T>(data);
    adjacencies.insert(std::pair<Vertex<T>, std::vector<Edge<T>>>(vertex, {}));
    return vertex;
-}
-
-/*
- Adds a directed edge in the graph between source and destination.
- */
-template <typename T>
-void Graph<T>::addDirectedEdge(const Vertex<T> & source, const Vertex<T> & destination, double weight) {
-   Edge<T> edge = Edge<T>(source, destination, weight);
-   adjacencies.at(source).push_back(edge);
 }
 
 /*
@@ -171,7 +186,7 @@ double Graph<T>::weight(const Vertex<T> & fromSource, const Vertex<T> & toDestin
 /// Streams the adjacency list to an output stream.
 template <typename T>
 std::ostream & operator << (std::ostream & stream, const Graph<T> & adjacencyList) {
-   std::cout << "Adjacency list for the network with weights:" << std::endl;
+   std::cout << "Edge list for the network with weights between <>:" << std::endl;
    for (auto const& [key, values] : adjacencyList.adjacencies) {
       stream << key << " ---> [ ";
       int counter = 0;
@@ -223,6 +238,7 @@ std::vector<Vertex<T>> Graph<T>::depthFirstSearchFrom(const Vertex<T> & from) co
    visited.push_back(adjacencies.find(from)->first);            // And also visited
 
    while (!stack.empty()) {            // While still something to depth search
+		//outer:									// 😈 blasphemy against Dijkstra (?)
       const auto & neighbours = edges(stack.top());   // Where to go from this vertex?
       if (neighbours.size() == 0) {                   // Nowhere, so take next from stack.
          stack.pop();
@@ -234,6 +250,7 @@ std::vector<Vertex<T>> Graph<T>::depthFirstSearchFrom(const Vertex<T> & from) co
                stack.push(edge.destination);                      //   - put this to stack to search
                pushed.insert(edge.destination);                   //   - is now searched
                visited.push_back(adjacencies.find(edge.destination)->first);   //   - and visited
+					// goto outer;														// 😈 blasphemy against Dijkstra (?)
                continueOuter = true;                              // Continue outer while loop to go
                break;                                             // deeper to items in stack (see *)
             }
