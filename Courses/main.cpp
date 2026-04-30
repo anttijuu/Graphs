@@ -22,10 +22,10 @@ void printPath(const std::vector<Edge<Course>> & path);
 int main(int argc, const char * argv[]) {
 
    // Needed to get scandinavian chars aligned properly in printing shortest path.
-	// Uncomment these if your system supports locales properly
-//	std::setlocale(LC_ALL, "fi_FI.UTF-8");
-//	std::locale loc("fi_FI.UTF-8");
-//	std::wcout.imbue(loc);
+	// Comment these if your system does not support locales properly (fails at launch).
+	std::setlocale(LC_ALL, "fi_FI.UTF-8");
+	std::locale loc("fi_FI.UTF-8");
+	std::wcout.imbue(loc);
 
    std::cout << std::endl << " >>>> Welcome to study @ TOL! >>>>" << std::endl;
    std::cout << " *** Compare the results to the LuK-courses.png with this project! *** " << std::endl << std::endl;
@@ -92,7 +92,9 @@ int main(int argc, const char * argv[]) {
    printPath(path);
 
 
+	std::cout << " Course count: " << network.allVertices().size() << "\n";
    auto topologicalList = network.topologicalSort();
+	std::cout << " Course count in topological sort list: " << topologicalList.size() << "\n";
    std::cout << std::endl << " --- Topological sort list of courses: " << std::endl;
    if (topologicalList.empty()) {
       std::cout << std::endl << "    Not able to sort, maybe graph is not directed & acyclic? " << std::endl;

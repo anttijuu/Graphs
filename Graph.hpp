@@ -381,8 +381,18 @@ std::vector<Vertex<T>> Graph<T>::topologicalSort() const {
    // Processed nodes
    std::set<Vertex<T>> blackNodes;
 
-   // Go through all the nodes in the graph
+   // Go through all the nodes in the graph, removing vertices
+	// that have an incoming edge. Do topological sort only for those
+	// vertices that have incoming edge.
    std::vector<Vertex<T>> allNodes = allVertices();
+	for (std::pair<Vertex<T>, std::vector<Edge<T>>> item : adjacencies) {
+		for (Edge<T> edge : item.second) {
+			auto position = std::find(allNodes.begin(), allNodes.end(), edge.destination);
+			if (position != allNodes.end()) {
+				allNodes.erase(position);
+			}
+		}
+	}
    while (!allNodes.empty()) {
       // While still nodes to handle, get one from the list
       Vertex<T> node = allNodes.front();
