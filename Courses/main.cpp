@@ -15,7 +15,7 @@
 #include "Course.hpp"
 
 // Helper funcs
-void createNetwork(Graph<Course> & network);
+void createNetwork(Graph<Course> & network, bool createNetworkForTopologicalSort = false);
 void printVertices(const std::vector<Vertex<Course>> & vertices);
 void printPath(const std::vector<Edge<Course>> & path);
 
@@ -38,9 +38,13 @@ int main(int argc, const char * argv[]) {
    Course kapo("811398A");
    Course ohj1("811104P");
 
+	// MARK: - Create the graph
+	
    /// Fill the network with vertices and edges.
    createNetwork(network);
 
+	// MARK: - Basic graph properties
+	
    /// Print out the network adjacency list.
    std::cout << network << std::endl;
 
@@ -49,6 +53,28 @@ int main(int argc, const char * argv[]) {
    std::cout << "Number of paths from JOTI to LUKT: " << network.numberOfPathsFrom(joti, lukt) << std::endl;
    std::cout << "Number of paths from OHJ1 to KAPO: " << network.numberOfPathsFrom(ohj1, kapo) << std::endl << std::endl;
 
+	// MARK: - List courses that are not prerequisites
+	
+	std::cout << "Courses that are not a required preceding course in any other BSc course:\n";
+	std::vector<Vertex<Course>> allNodes = network.allVertices();
+	for (std::pair<Vertex<Course>, std::vector<Edge<Course>>> item : network.adjacencies) {
+		for (Edge<Course> edge : item.second) {
+			auto position = std::find(allNodes.begin(), allNodes.end(), edge.source);
+			if (position != allNodes.end()) {
+				allNodes.erase(position);
+			}
+		}
+	}
+	if (!allNodes.empty()) {
+		for (Vertex<Course> vertex : allNodes) {
+			std::cout << " - " << vertex.data.code << ": ";
+			std::wcout << vertex.data.name << L"\n";
+		}
+	}
+	std::cout << "\n";
+
+	// MARK: - BFS and DFS
+	
    std::cout << "Breadth first search from JOTI";
    auto vertices = network.breadthFirstSearchFrom(joti);
    printVertices(vertices);
@@ -64,6 +90,8 @@ int main(int argc, const char * argv[]) {
 
    std::cout << std::endl << "Does the network have cycles?: " << (network.hasCycle(joti) ? "yes" : "no") << std::endl << std::endl;
 
+	// MARK: - Do DFS from all vertices
+	
    // Take all vertices and do depth search for each of them, unless it already is included
    // in some search result.
    std::cout << ">>> All trees in the network: >>>" << std::endl << std::endl;
@@ -80,6 +108,8 @@ int main(int argc, const char * argv[]) {
    }
    std::cout << "<<< End of all trees in the network: <<<" << std::endl << std::endl;
 
+	// MARK: - Dijkstra's search
+	
    std::cout << " --- Using Dijkstra's algorithm to find shortest path from JOTI to KAPO:" << std::endl << std::endl;
    Dijkstra<Course> dijkstra(network);
    auto pathsFromJOTI = dijkstra.shortestPathsFrom(joti);
@@ -91,7 +121,10 @@ int main(int argc, const char * argv[]) {
    path = dijkstra.shortestPathTo(kapo, pathsFromOHJ1);
    printPath(path);
 
-
+	// MARK: - Topological sort
+	
+	network.clear();
+	createNetwork(network, true);
 	std::cout << " Course count: " << network.allVertices().size() << "\n";
    auto topologicalList = network.topologicalSort();
 	std::cout << " Course count in topological sort list: " << topologicalList.size() << "\n";
@@ -106,7 +139,7 @@ int main(int argc, const char * argv[]) {
 }
 
 
-void createNetwork(Graph<Course> & network) {
+void createNetwork(Graph<Course> & network, bool addExtraEdgesForTopologicalSort) {
    // See the LuK-courses.png of this network.
    auto tiha = network.createVertex(Course("030005P", "TIHA", L"Tiedonhankintakurssi", 3, 1));
    auto suur = network.createVertex(Course("900105Y", "SUUR", L"Suuntaa uralle viestinnän keinoin", 3, 2));
@@ -182,13 +215,15 @@ void createNetwork(Graph<Course> & network) {
    network.add(EdgeType::EDirected, suur, jotu, 1);
    network.add(EdgeType::EDirected, tiha, lukt, 1);
    network.add(EdgeType::EDirected, jotu, lukt, 1);
+	
+	// Testing with better dependencies; related to topological sort
+	if (addExtraEdgesForTopologicalSort) {
+		network.add(EdgeType::EDirected, joti, tjps, 1);
+		network.add(EdgeType::EDirected, lati, ohj1, 1);
+		network.add(EdgeType::EDirected, titu, tika, 1);
+		network.add(EdgeType::EDirected, late, prot, 1);
+	}
 
-   // Testing with better dependencies; related to topological sort
-   // Uncomment these to check out topological sorting with decent result!
-   // network.add(EdgeType::EDirected, joti, tjps, 1);
-   // network.add(EdgeType::EDirected, lati, ohj1, 1);
-   // network.add(EdgeType::EDirected, titu, tika, 1);
-   // network.add(EdgeType::EDirected, late, prot, 1);
 }
 
 void printVertices(const std::vector<Vertex<Course>> & vertices) {

@@ -47,6 +47,8 @@ public:
 
 	/// Checks if the vertex already has an edge with specified destination vertex.
 	bool hasDestination(const Vertex<T> & vertex, const Vertex<T> & destination) const;
+
+	void clear();
 	
    void copyVerticesFrom(const Graph<T> & graph);
 
@@ -142,6 +144,11 @@ Vertex<T> Graph<T>::createVertex(const T & data) {
    Vertex<T> vertex = Vertex<T>(data);
    adjacencies.insert(std::pair<Vertex<T>, std::vector<Edge<T>>>(vertex, {}));
    return vertex;
+}
+
+template <typename T>
+void Graph<T>::clear() {
+	adjacencies.clear();
 }
 
 /*
